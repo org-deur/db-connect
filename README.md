@@ -4,5 +4,4 @@ app connect multi database
 
 ## Tech stack
 
-- Golang
-- React
+- Java
