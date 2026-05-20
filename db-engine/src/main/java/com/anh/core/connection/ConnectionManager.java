@@ -1,13 +1,16 @@
 package com.anh.core.connection;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.anh.database.common.DatabaseDialect;
 import com.anh.database.common.DialectFactory;
 import com.anh.dto.ConnectionRequest;
+import com.anh.dto.SessionInfoResponse;
 import com.anh.model.ConnectionSession;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -106,5 +109,31 @@ public class ConnectionManager {
 
             session.dataSource.close();
         }
+    }
+
+    public static List<SessionInfoResponse> getSessionInfos() {
+
+        List<SessionInfoResponse> result = new ArrayList<>();
+
+        for (ConnectionSession session : sessions.values()) {
+
+            SessionInfoResponse info = new SessionInfoResponse();
+
+            info.sessionId = session.sessionId;
+
+            info.type = session.type;
+
+            info.host = session.host;
+
+            info.port = session.port;
+
+            info.database = session.database;
+
+            info.username = session.username;
+
+            result.add(info);
+        }
+
+        return result;
     }
 }

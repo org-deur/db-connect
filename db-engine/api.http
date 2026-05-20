@@ -1,7 +1,8 @@
-###
+### check backend app
+
 GET http://localhost:8080/ping
 
-####
+#### test connect db
 
 POST http://localhost:8080/connect/test
 Content-Type: application/json
@@ -15,7 +16,7 @@ Content-Type: application/json
   "password": "123456"
 }
 
-###
+### create session
 
 POST http://localhost:8080/connect/create
 Content-Type: application/json
@@ -28,3 +29,13 @@ Content-Type: application/json
   "username": "postgres",
   "password": "123456"
 }
+
+### close session
+
+DELETE http://localhost:8080/connect/04c220a9-402b-4b8d-9af0-d6e417df5498
+
+### get list sessions
+
+GET http://localhost:8080/connect/sessions
+
+###

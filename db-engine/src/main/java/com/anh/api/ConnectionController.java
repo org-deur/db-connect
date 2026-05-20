@@ -12,6 +12,10 @@ public class ConnectionController {
         registerTest(app);
 
         registerCreate(app);
+
+        registerClose(app);
+
+        registerList(app);
     }
 
     private static void registerTest(Javalin app) {
@@ -79,6 +83,52 @@ public class ConnectionController {
 
                 ctx.json(response);
             }
+        });
+    }
+
+    private static void registerClose(Javalin app) {
+
+        app.delete("/connect/{sessionId}", ctx -> {
+
+            ConnectionResponse response = new ConnectionResponse();
+
+            try {
+
+                String sessionId = ctx.pathParam(
+                        "sessionId");
+
+                ConnectionManager.closeSession(
+                        sessionId);
+
+                response.success = true;
+
+                response.message = "Session closed";
+
+                response.sessionId = sessionId;
+
+                ctx.json(response);
+
+            } catch (Exception e) {
+
+                e.printStackTrace();
+
+                ctx.status(500);
+
+                response.success = false;
+
+                response.message = e.getMessage();
+
+                ctx.json(response);
+            }
+        });
+    }
+
+    private static void registerList(Javalin app) {
+
+        app.get("/connect/sessions", ctx -> {
+
+            ctx.json(
+                ConnectionManager.getSessionInfos());
         });
     }
 }
