@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: docker.io/library/postgres:16
+    container_name: db-connect
+    restart: always
+    environment:
+        - POSTGRES_DB=db-connect
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=123456
+    ports:
+        - "5432:5432"
+    volumes:
+        - db-connect-vol:/var/lib/postgresql/data
+
+volumes:
+    db-connect-vol:

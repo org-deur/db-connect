@@ -38,4 +38,23 @@ DELETE http://localhost:8080/connect/04c220a9-402b-4b8d-9af0-d6e417df5498
 
 GET http://localhost:8080/connect/sessions
 
-###
+### query
+
+POST http://localhost:8080/query
+Content-Type: application/json
+
+# {
+#   "sessionId": "1e7a9ed2-f385-4214-a59b-9a7521cfa0a1",
+#   "sql": "create table users(id SERIAL, name varchar(100))"
+# }
+
+# {
+#   "sessionId": "1e7a9ed2-f385-4214-a59b-9a7521cfa0a1",
+#   "sql": "insert into users(name) values ('Alice')"
+# }
+
+{
+  "sessionId": "1e7a9ed2-f385-4214-a59b-9a7521cfa0a1",
+  "sql": "select * from users"
+}
+

@@ -8,5 +8,7 @@ public class Router {
         HealthController.register(app);
 
         ConnectionController.register(app);
+
+        QueryController.register(app);
     }
 }
