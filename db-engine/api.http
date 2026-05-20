@@ -58,3 +58,6 @@ Content-Type: application/json
   "sql": "select * from users"
 }
 
+###
+
+GET http://localhost:8080/metadata/tables/94a07ae4-0533-4238-a00a-131cbcefd10e
