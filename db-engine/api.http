@@ -1,10 +1,15 @@
+### variable
+
+@session = f006a838-8f51-4d1d-b123-ca428fba220c
+@localhost = http://localhost:8080
+
 ### check backend app
 
-GET http://localhost:8080/ping
+GET {{{{localhost}}}}/ping
 
 #### test connect db
 
-POST http://localhost:8080/connect/test
+POST {{localhost}}/connect/test
 Content-Type: application/json
 
 {
@@ -18,7 +23,7 @@ Content-Type: application/json
 
 ### create session
 
-POST http://localhost:8080/connect/create
+POST {{localhost}}/connect/create
 Content-Type: application/json
 
 {
@@ -32,32 +37,36 @@ Content-Type: application/json
 
 ### close session
 
-DELETE http://localhost:8080/connect/04c220a9-402b-4b8d-9af0-d6e417df5498
+DELETE {{localhost}}/connect/{{session}}
 
 ### get list sessions
 
-GET http://localhost:8080/connect/sessions
+GET {{localhost}}/connect/sessions
 
 ### query
 
-POST http://localhost:8080/query
+POST {{localhost}}/query
 Content-Type: application/json
 
 # {
-#   "sessionId": "1e7a9ed2-f385-4214-a59b-9a7521cfa0a1",
+#   "sessionId": "{{session}}",
 #   "sql": "create table users(id SERIAL, name varchar(100))"
 # }
 
 # {
-#   "sessionId": "1e7a9ed2-f385-4214-a59b-9a7521cfa0a1",
+#   "sessionId": "{{session}}",
 #   "sql": "insert into users(name) values ('Alice')"
 # }
 
 {
-  "sessionId": "1e7a9ed2-f385-4214-a59b-9a7521cfa0a1",
+  "sessionId": "{{session}}",
   "sql": "select * from users"
 }
 
-###
+### get all table name
 
-GET http://localhost:8080/metadata/tables/94a07ae4-0533-4238-a00a-131cbcefd10e
+GET {{localhost}}/metadata/tables/{{session}}
+
+### get column of table
+
+GET {{localhost}}/metadata/columns/{{session}}/users
