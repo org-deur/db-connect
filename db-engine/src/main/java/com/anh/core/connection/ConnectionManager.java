@@ -14,97 +14,97 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class ConnectionManager {
 
-        private static final ConcurrentHashMap<String, ConnectionSession> sessions = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, ConnectionSession> sessions = new ConcurrentHashMap<>();
 
-        public static String createConnection( ConnectionRequest request) {
+    public static String createConnection(ConnectionRequest request) {
 
-                DatabaseDialect dialect = DialectFactory.getDialect(request.type);
+        DatabaseDialect dialect = DialectFactory.getDialect(request.type);
 
-                String jdbcUrl = dialect.buildJdbcUrl(
-                                request.host,
-                                request.port,
-                                request.database);
+        String jdbcUrl = dialect.buildJdbcUrl(
+                request.host,
+                request.port,
+                request.database);
 
-                HikariConfig config = new HikariConfig();
+        HikariConfig config = new HikariConfig();
 
-                config.setJdbcUrl(jdbcUrl);
+        config.setJdbcUrl(jdbcUrl);
 
-                config.setUsername(request.username);
+        config.setUsername(request.username);
 
-                config.setPassword(request.password);
+        config.setPassword(request.password);
 
-                config.setMaximumPoolSize(10);
+        config.setMaximumPoolSize(10);
 
-                HikariDataSource dataSource = new HikariDataSource(config);
+        HikariDataSource dataSource = new HikariDataSource(config);
 
-                String sessionId = UUID.randomUUID().toString();
+        String sessionId = UUID.randomUUID().toString();
 
-                ConnectionSession session = new ConnectionSession();
+        ConnectionSession session = new ConnectionSession();
 
-                session.sessionId = sessionId;
+        session.sessionId = sessionId;
 
-                session.type = request.type;
+        session.type = request.type;
 
-                session.host = request.host;
+        session.host = request.host;
 
-                session.port = request.port;
+        session.port = request.port;
 
-                session.database = request.database;
+        session.database = request.database;
 
-                session.username = request.username;
+        session.username = request.username;
 
-                session.dataSource = dataSource;
+        session.dataSource = dataSource;
 
-                sessions.put(sessionId,session);
+        sessions.put(sessionId, session);
 
-                return sessionId;
+        return sessionId;
+    }
+
+    public static void testConnection(ConnectionRequest request) throws Exception {
+
+        DatabaseDialect dialect = DialectFactory.getDialect(request.type);
+
+        String jdbcUrl = dialect.buildJdbcUrl(
+                request.host,
+                request.port,
+                request.database);
+
+        HikariConfig config = new HikariConfig();
+
+        config.setJdbcUrl(jdbcUrl);
+
+        config.setUsername(request.username);
+
+        config.setPassword(request.password);
+
+        config.setMaximumPoolSize(1);
+
+        HikariDataSource dataSource = new HikariDataSource(config);
+
+        Connection connection = dataSource.getConnection();
+
+        connection.close();
+
+        dataSource.close();
+    }
+
+    public static ConnectionSession getSession(String sessionId) {
+
+        return sessions.get(sessionId);
+    }
+
+    public static Collection<ConnectionSession> getSessions() {
+
+        return sessions.values();
+    }
+
+    public static void closeSession(String sessionId) {
+
+        ConnectionSession session = sessions.remove(sessionId);
+
+        if (session != null) {
+
+            session.dataSource.close();
         }
-
-        public static void testConnection(ConnectionRequest request) throws Exception {
-
-                DatabaseDialect dialect = DialectFactory.getDialect(request.type);
-
-                String jdbcUrl = dialect.buildJdbcUrl(
-                                request.host,
-                                request.port,
-                                request.database);
-
-                HikariConfig config = new HikariConfig();
-
-                config.setJdbcUrl(jdbcUrl);
-
-                config.setUsername(request.username);
-
-                config.setPassword(request.password);
-
-                config.setMaximumPoolSize(1);
-
-                HikariDataSource dataSource = new HikariDataSource(config);
-
-                Connection connection = dataSource.getConnection();
-
-                connection.close();
-
-                dataSource.close();
-        }
-
-        public static ConnectionSession getSession(String sessionId) {
-
-                return sessions.get(sessionId);
-        }
-
-        public static Collection<ConnectionSession> getSessions() {
-
-                return sessions.values();
-        }
-
-        public static void closeSession(String sessionId) {
-
-                ConnectionSession session = sessions.remove(sessionId);
-
-                if (session != null) {
-
-                        session.dataSource.close();
-                }
-        }
+    }
 }
