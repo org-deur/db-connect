@@ -15,3 +15,21 @@ app connect multi database
 
 
 <!-- npm run tauri dev -->
+
+## Struct
+
+```sh
+                    DB Client
+                        │
+        ┌───────────────┴────────────────┐
+        │                                │
+        ▼                                ▼
+Config Database                  User Database
+(lưu setting)                    (database thực)
+        │                                │
+     SQLite                      PostgreSQL
+                                 MySQL
+                                 Oracle
+                                 SQL Server
+                                 SQLite
+```

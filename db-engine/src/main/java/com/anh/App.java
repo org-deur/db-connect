@@ -1,6 +1,7 @@
 package com.anh;
 
 import com.anh.api.Router;
+import com.anh.core.configdb.ConfigDatabaseInitializer;
 
 import io.javalin.Javalin;
 
@@ -12,6 +13,8 @@ public class App
 {
     public static void main( String[] args )
     {
+        ConfigDatabaseInitializer.initialize();
+        
         Javalin app = Javalin.create(config -> {
 
             config.bundledPlugins.enableCors(cors -> {
