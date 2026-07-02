@@ -21,7 +21,7 @@ public final class ConfigDatabase {
                     "config.db"
             );
 
-            // System.out.println("Config DB: " + dbPath.toAbsolutePath());
+            System.out.println("Config DB: " + dbPath.toAbsolutePath());
 
             Files.createDirectories(dbPath.getParent());
 

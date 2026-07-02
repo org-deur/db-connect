@@ -12,5 +12,7 @@ public class Router {
         QueryController.register(app);
 
         MetadataController.register(app);
+
+        SavedConnectionController.register(app);
     }
 }

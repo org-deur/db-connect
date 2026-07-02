@@ -33,3 +33,51 @@ Config Database                  User Database
                                  SQL Server
                                  SQLite
 ```
+<!--
+            Save Connection
+                   │
+                   ▼
+      SavedConnectionRepository
+                   │
+                   ▼
+              config.db
+                   ▲
+                   │
+             Load khi mở app
+
+────────────────────────────────────
+
+              Connect
+                   │
+                   ▼
+         ConnectionManager
+                   │
+                   ▼
+            Hikari Connection Pool
+                   │
+                   ▼
+        PostgreSQL / Oracle / ...
+-->
+
+<!--
+Frontend
+     │
+     ▼
+ConnectionController
+     │
+     ▼
+ConnectionService
+     │
+     ├─────────────► SavedConnectionRepository
+     │                     │
+     │                     ▼
+     │                 config.db
+     │
+     ▼
+ConnectionManager
+     │
+     ▼
+PostgreSQL / MySQL / Oracle ...
+-->
+
+<!-- rm ~/.db-client/config.db -->
