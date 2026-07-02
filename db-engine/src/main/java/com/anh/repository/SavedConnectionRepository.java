@@ -81,7 +81,39 @@ public class SavedConnectionRepository extends BaseRepository{
     };
 
     public void save(SavedConnection connection) {
+        // String sql = """
+        //     INSERT INTO saved_connection
+        //     (
+        //         name,
+        //         database_type,
+        //         host,
+        //         port,
+        //         database_name,
+        //         username
+        //     )
+        //     VALUES
+        //     (
+        //         ?, ?, ?, ?, ?, ?
+        //     );
+        //         """;
+        // try (
+        //     Connection connect = getConnection();
+        //     PreparedStatement statement = connect.prepareStatement(sql)) {
 
+        //     statement.setString(1, connection.name);
+        //     statement.setString(2, connection.databaseType);
+        //     statement.setString(3, connection.host);
+        //     statement.setInt(4, connection.port);
+        //     statement.setString(5, connection.databaseName);
+        //     statement.setString(6, connection.username);
+
+        //     try (ResultSet rs = statement.executeQuery()) {
+
+        //     }
+
+        // } catch (Exception e) {
+        //     throw new RuntimeException(e);
+        // }
     };
 
     public void update(SavedConnection connection) {

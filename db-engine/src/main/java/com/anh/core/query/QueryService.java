@@ -29,11 +29,9 @@ public class QueryService {
 
         QueryResponse response = new QueryResponse();
 
-        try (
-                Connection connection = session.dataSource
-                        .getConnection();
+        Connection connection = session.connection;
 
-                Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
 
             boolean hasResultSet = statement.execute(sql);
 
@@ -56,7 +54,7 @@ public class QueryService {
                 for (int i = 1; i <= columnCount; i++) {
 
                     columns.add(
-                        metaData.getColumnLabel(i));
+                            metaData.getColumnLabel(i));
                 }
 
                 while (resultSet.next()) {
@@ -66,8 +64,8 @@ public class QueryService {
                     for (int i = 1; i <= columnCount; i++) {
 
                         row.put(
-                            metaData.getColumnLabel(i),
-                            resultSet.getObject(i));
+                                metaData.getColumnLabel(i),
+                                resultSet.getObject(i));
                     }
 
                     rows.add(row);

@@ -27,6 +27,9 @@ public class ConfigDatabaseInitializer {
 
                 script = script.trim();
 
+                System.out.println("==== SQL ====");
+                System.out.println(script);
+
                 if (!script.isEmpty()) {
                     statement.execute(script);
                 }

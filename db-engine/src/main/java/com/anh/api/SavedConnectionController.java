@@ -16,7 +16,7 @@ public class SavedConnectionController {
 
         registerGet(app);
 
-        // registerCreate(app);
+        registerCreate(app);
 
         // registerUpdate(app);
 
@@ -54,7 +54,9 @@ public class SavedConnectionController {
     }
 
     private static void registerCreate(Javalin app) {
+        app.post("/saved-connections/create", ctx -> {
 
+        });
     }
 
     private static void registerList(Javalin app) {

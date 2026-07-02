@@ -50,24 +50,3 @@ CREATE TABLE IF NOT EXISTS application_setting (
     key TEXT PRIMARY KEY,
     value TEXT NOT NULL
 );
-
---
-
--- INSERT INTO saved_connection
--- (
---     name,
---     database_type,
---     host,
---     port,
---     database_name,
---     username
--- )
--- VALUES
--- (
---     'Local PostgreSQL',
---     'POSTGRESQL',
---     'localhost',
---     5432,
---     'job',
---     'postgres'
--- );

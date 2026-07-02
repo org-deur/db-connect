@@ -1,6 +1,8 @@
 package com.anh.core.connection;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -12,14 +14,12 @@ import com.anh.database.common.DialectFactory;
 import com.anh.dto.ConnectionRequest;
 import com.anh.dto.SessionInfoResponse;
 import com.anh.model.ConnectionSession;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 public class ConnectionManager {
 
     private static final ConcurrentHashMap<String, ConnectionSession> sessions = new ConcurrentHashMap<>();
 
-    public static String createConnection(ConnectionRequest request) {
+    public static String createConnection(ConnectionRequest request) throws SQLException {
 
         DatabaseDialect dialect = DialectFactory.getDialect(request.type);
 
@@ -28,17 +28,11 @@ public class ConnectionManager {
                 request.port,
                 request.database);
 
-        HikariConfig config = new HikariConfig();
-
-        config.setJdbcUrl(jdbcUrl);
-
-        config.setUsername(request.username);
-
-        config.setPassword(request.password);
-
-        config.setMaximumPoolSize(10);
-
-        HikariDataSource dataSource = new HikariDataSource(config);
+        Connection connection = DriverManager.getConnection(
+                jdbcUrl,
+                request.username,
+                request.password
+            );
 
         String sessionId = UUID.randomUUID().toString();
 
@@ -56,7 +50,7 @@ public class ConnectionManager {
 
         session.username = request.username;
 
-        session.dataSource = dataSource;
+        session.connection = connection;
 
         sessions.put(sessionId, session);
 
@@ -72,23 +66,12 @@ public class ConnectionManager {
                 request.port,
                 request.database);
 
-        HikariConfig config = new HikariConfig();
-
-        config.setJdbcUrl(jdbcUrl);
-
-        config.setUsername(request.username);
-
-        config.setPassword(request.password);
-
-        config.setMaximumPoolSize(1);
-
-        HikariDataSource dataSource = new HikariDataSource(config);
-
-        Connection connection = dataSource.getConnection();
+        Connection connection = DriverManager.getConnection(
+                jdbcUrl,
+                request.username,
+                request.password);
 
         connection.close();
-
-        dataSource.close();
     }
 
     public static ConnectionSession getSession(String sessionId) {
@@ -101,13 +84,13 @@ public class ConnectionManager {
         return sessions.values();
     }
 
-    public static void closeSession(String sessionId) {
+    public static void closeSession(String sessionId) throws SQLException {
 
         ConnectionSession session = sessions.remove(sessionId);
 
         if (session != null) {
 
-            session.dataSource.close();
+            session.connection.close();
         }
     }
 

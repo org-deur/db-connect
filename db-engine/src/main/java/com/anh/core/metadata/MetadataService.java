@@ -26,12 +26,11 @@ public class MetadataService {
 
         List<TableInfo> tables = new ArrayList<>();
 
+        Connection connection = session.connection;
+
+        DatabaseMetaData metaData = connection.getMetaData();
+
         try (
-                Connection connection = session.dataSource
-                        .getConnection()) {
-
-            DatabaseMetaData metaData = connection.getMetaData();
-
             ResultSet resultSet = metaData.getTables(
                     null,
                     null,
@@ -39,6 +38,7 @@ public class MetadataService {
                     new String[] {
                             "TABLE"
                     });
+        ) {
 
             while (resultSet.next()) {
 
@@ -73,17 +73,17 @@ public class MetadataService {
 
         List<ColumnInfo> columns = new ArrayList<>();
 
+        Connection connection = session.connection;
+
+        DatabaseMetaData metaData = connection.getMetaData();
+
         try (
-                Connection connection = session.dataSource
-                        .getConnection()) {
-
-            DatabaseMetaData metaData = connection.getMetaData();
-
             ResultSet resultSet = metaData.getColumns(
                     null,
                     null,
                     tableName,
                     "%");
+        ) {
 
             while (resultSet.next()) {
 

@@ -1,7 +1,8 @@
 package com.anh.model;
 
+import java.sql.Connection;
+
 import com.anh.database.common.DatabaseType;
-import com.zaxxer.hikari.HikariDataSource;
 
 public class ConnectionSession {
     public String sessionId;
@@ -16,5 +17,5 @@ public class ConnectionSession {
 
     public String username;
 
-    public HikariDataSource dataSource;
+    public Connection connection;
 }
