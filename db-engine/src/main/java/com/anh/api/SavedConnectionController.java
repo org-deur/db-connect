@@ -1,5 +1,6 @@
 package com.anh.api;
 
+import com.anh.dto.ConnectionRequest;
 import com.anh.model.SavedConnection;
 import com.anh.repository.SavedConnectionRepository;
 
@@ -54,8 +55,17 @@ public class SavedConnectionController {
     }
 
     private static void registerCreate(Javalin app) {
-        app.post("/saved-connections/create", ctx -> {
 
+        app.post("/saved-connections", ctx -> {
+
+            SavedConnection request =
+                    ctx.bodyAsClass(SavedConnection.class);
+
+            int id = repository.save(request);
+
+            ctx.status(201);
+
+            ctx.json(id);
         });
     }
 

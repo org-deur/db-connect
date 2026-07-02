@@ -1,6 +1,6 @@
 ### variable
 
-@session = a7c09f13-73c1-431f-867d-9fe3969ec0d3
+@session = 84e3e63f-84c4-4178-aba3-dcc2b68c891f
 @localhost = http://localhost:8080
 
 ### check backend app
@@ -78,3 +78,18 @@ GET {{localhost}}/saved-connections
 ### get by id saved connection
 
 GET {{localhost}}/saved-connections/1
+
+### save connection
+
+POST {{localhost}}/saved-connections
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "Local PostgreSQL",
+    "databaseType": "POSTGRESQL",
+    "host": "localhost",
+    "port": 5432,
+    "databaseName": "job",
+    "username": "postgres"
+}
