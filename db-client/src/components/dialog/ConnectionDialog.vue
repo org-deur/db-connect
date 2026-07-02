@@ -216,65 +216,53 @@ function changeType(type: DatabaseType){
 
 <style scoped>
 
-.overlay{
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .4);
 
-    position:fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    inset:0;
-
-    background:rgba(0,0,0,.4);
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
+    padding: 20px;
+    box-sizing: border-box;
 }
 
-.dialog{
+.dialog {
+    width: min(450px, 100%);
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
 
-    width:450px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
 
-    background:white;
+    box-sizing: border-box;
 
-    border-radius:12px;
-
-    padding:24px;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:14px;
-
+    max-height: 90vh;
+    overflow-y: auto;
 }
 
-label{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:6px;
-
+label {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 }
 
 input,
-select{
-
-    padding:10px;
-
+select {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
-.buttons{
-
-    display:flex;
-
-    justify-content:flex-end;
-
-    gap:12px;
-
+.buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 </style>

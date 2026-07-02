@@ -80,10 +80,16 @@ onMounted(loadSessions);
 
 <style scoped>
 
-.container{
-    width:900px;
-    margin:auto;
-    padding:40px;
+.container {
+    width: min(900px, 100%);
+    margin: 0 auto;
+    padding: clamp(16px, 3vw, 40px);
+    box-sizing: border-box;
+}
+
+.session-list {
+    display: grid;
+    gap: 20px;
 }
 
 </style>
